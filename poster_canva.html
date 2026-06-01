@@ -332,15 +332,15 @@ Topic: Training sentences were filtered to 5-60 tokens, and stopwords were remov
         </div>
         <div class="bubble-box" style="background: rgb(255, 255, 255);">
           <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">NAMED ENTITY RECOGNITION<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">2 SYSTEMS</span></div>
-          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A: spaCy en_core_web_sm pipeline using a Convolutional Neural Network (CNN) trained on OntoNotes 5. System B: NLTK Maximum Entropy (MaxEnt) token chunker trained on ACE 2004. Output labels are mapped to standard CoNLL BIO tags.</p>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A: spaCy en_core_web_sm pipeline using a Convolutional Neural Network (CNN) trained on OntoNotes 5. System B: NLTK Maximum Entropy (MaxEnt) token chunker trained on ACE 2004. spaCy's CNN encoder learns token representations from distributional context, whereas NLTK MaxEnt relies on hand-crafted local features (±2 token window). Output labels are mapped to standard CoNLL BIO tags.</p>
         </div>
         <div class="bubble-box" style="background: rgb(255, 255, 255);">
           <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">SENTIMENT ANALYSIS<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">2 SYSTEMS</span></div>
-          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A: VADER: rule-based lexicon of roughly 7,500 terms with negation, booster, and punctuation heuristics. System B: TextBlob / Pattern lexicon using mean token polarity, thresholded at +/-0.05 to match VADER for a fair comparison.</p>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A: VADER: rule-based lexicon of roughly 7,500 terms with negation, booster, and punctuation heuristics. System B: TextBlob / Pattern lexicon using mean token polarity, thresholded at +/-0.05 to match VADER for a fair comparison. Both systems use sparse lexical representations rather than distributional vectors, making them sensitive to vocabulary coverage gaps</p>
         </div>
         <div class="bubble-box" style="background: rgb(255, 255, 255);">
           <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">SUPERVISED TOPIC CLASSIFICATION<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">SVM</span></div>
-          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Linear Support Vector Machine (SVM) over a TF-IDF vector space (unigram + bigram, sublinear term frequency, balanced class weights). Trained on the 4,500-sentence corpus and applied to the 10 test sentences.</p>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Linear Support Vector Machine (SVM) over a TF-IDF vector space (unigram + bigram, sublinear term frequency, balanced class weights). Trained on the 4,500-sentence corpus and applied to the 10 test sentences. TF-IDF approximates PPMI by down-weighting frequent terms, using log-normalised sublinear scaling.</p>
         </div>
       </div>
     </div>
