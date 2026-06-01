@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Multi-Task NLP Evaluation - A0 Poster</title>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:       #1E6FD9;
+  --blue-dark:  #1559B5;
+  --blue-light: #E8F2FF;
+  --blue-mid:   #3D88F0;
+  --blue-rule:  #BDD6F7;
+  --text:       #232323;
+  --muted:      #5C5C5C;
+  --white:      #FFFFFF;
+  --zebra:      #F2F7FD;
+}
+
+body {
+  background: #4A4A4A;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+}
+.stage { padding: 20px; width: 100%; display: flex; justify-content: center; }
+.poster-wrap { flex-shrink: 0; }
+.poster {
+  width: 2000px;
+  height: 2828px;
+  background: white;
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- HEADER --- */
+.header {
+  background: var(--blue);
+  padding: 26px 64px 22px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.hd-title {
+  font-size: 88px;
+  font-weight: 900;
+  color: white;
+  line-height: 1.0;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  margin-bottom: 10px;
+}
+.hd-sub {
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 6px;
+}
+.hd-affil {
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.60);
+}
+sup { font-size: 60%; vertical-align: super; }
+
+/* --- BODY --- */
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 36px 10px;
+  gap: 2px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* row heights */
+.top-row     { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-shrink: 0; height: 580px; }
+.results-row { flex-shrink: 0; height: 890px; }
+.qual-row    { flex: 1; min-height: 0; padding-top: 18px; }
+.disc-row    { flex: 1; min-height: 0; padding-top: 42px; }
+.proj-row    { flex-shrink: 0; height: 310px; padding-top: 18px; }
+
+/* --- SECTION HEADER PILL --- */
+.sec-hd {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 13px;
+  background: var(--blue);
+  border-radius: 40px;
+  padding: 7px 22px 7px 7px;
+}
+.sec-num {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: white;
+  color: var(--blue);
+  font-size: 24px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-right: 13px;
+}
+.sec-title { font-size: 29px; font-weight: 900; color: white; line-height: 1; letter-spacing: 0.01em; }
+
+/* --- TYPOGRAPHY --- */
+.body-p { font-size: 18px; line-height: 1.62; color: var(--text); text-wrap: pretty; margin-bottom: 10px; }
+.body-p:last-child { margin-bottom: 0; }
+.sub-head { font-size: 18px; font-weight: 700; color: var(--blue); margin: 11px 0 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+.ul { list-style: disc; padding-left: 20px; margin-bottom: 7px; }
+.ul li { font-size: 18px; line-height: 1.58; color: var(--text); margin-bottom: 5px; }
+
+/* --- INFO BOXES --- */
+.info-box {
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue-mid);
+  padding: 14px 16px;
+  margin: 10px 0;
+}
+.ib-title {
+  font-size: 14px; font-weight: 700; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.09em;
+  margin-bottom: 9px;
+}
+.ib-row {
+  font-size: 17px; line-height: 1.54; color: var(--text);
+  margin-bottom: 6px; padding-left: 16px; position: relative;
+}
+.ib-row::before { content: "\2022"; position: absolute; left: 2px; color: var(--blue-mid); font-weight: 900; }
+.ib-stats {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 6px;
+}
+.ib-stat {
+  background: var(--blue);
+  color: white;
+  font-size: 13px; font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* --- BUBBLE CARD (Methods) --- */
+.bubble-card {
+  background: var(--blue-light);
+  border-radius: 22px;
+  padding: 16px 18px;
+  height: calc(100% - 62px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+.bubble-box {
+  background: white;
+  border-radius: 14px;
+  padding: 12px 15px;
+  border: 1.5px solid var(--blue-rule);
+  overflow: hidden;
+}
+.bubble-box-title {
+  font-size: 15.5px; font-weight: 900; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding-bottom: 7px; margin-bottom: 9px;
+  border-bottom: 1px solid var(--blue-rule);
+  display: flex; align-items: center; gap: 7px;
+}
+.bubble-box .body-p { font-size: 18px; line-height: 1.62; margin-bottom: 0; }
+.bb-tag {
+  font-size: 11px; font-weight: 700; color: white;
+  background: var(--blue-mid);
+  border-radius: 20px; padding: 2px 8px;
+  letter-spacing: 0.05em;
+}
+
+/* --- RESULTS --- */
+.figs-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+  height: calc(100% - 76px);
+}
+.fig-cell { display: flex; flex-direction: column; min-height: 0; }
+.fig-label { font-size: 13.5px; font-weight: 700; color: var(--blue); margin-bottom: 5px; flex-shrink: 0; }
+.fig-img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center top;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--blue-rule);
+  background: white;
+}
+.fig-cap { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 5px; line-height: 1.42; flex-shrink: 0; }
+.table-cell-inner { flex: 1; display: flex; flex-direction: row; gap: 14px; min-height: 0; overflow: hidden; align-items: stretch; }
+.rtable { width: 100%; border-collapse: collapse; font-size: 16.5px; }
+.rtable thead tr { background: var(--blue); }
+.rtable thead th { color: white; font-size: 14px; font-weight: 700; padding: 9px 13px; text-align: left; }
+.rtable thead th.r { text-align: center; }
+.rtable tbody tr { border-bottom: 1px solid var(--blue-rule); }
+.rtable tbody tr:nth-child(even) { background: var(--zebra); }
+.rtable tbody td { padding: 9px 13px; color: var(--text); vertical-align: middle; }
+.rtable tbody td.r { text-align: center; font-weight: 700; }
+.rtable tbody td.hi { color: #1A6A1A; font-weight: 800; }
+
+.cv-box {
+  background: var(--blue);
+  padding: 20px 18px 18px; border-radius: 12px;
+  display: flex; flex-direction: column; justify-content: flex-start;
+}
+.cv-num { font-size: 58px; font-weight: 900; color: white; line-height: 1; margin-bottom: 10px; }
+.cv-desc { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.50; }
+
+/* --- QUALITATIVE ERROR ANALYSIS --- */
+.qual-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; height: calc(100% - 75px); }
+.qual-cell { border: 1.5px solid var(--blue-rule); border-radius: 14px; padding: 22px 22px; }
+.qual-cell-title {
+  font-size: 16.5px; font-weight: 900; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding-bottom: 9px; margin-bottom: 12px;
+  border-bottom: 2px solid var(--blue-mid);
+}
+
+/* --- DISCUSSION --- */
+.disc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; height: calc(100% - 75px); }
+.disc-cell {
+  background: var(--blue-light);
+  border-radius: 18px;
+  padding: 22px 22px;
+  border: 1.5px solid var(--blue-rule);
+}
+.disc-cell-title {
+  font-size: 16.5px; font-weight: 900; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding-bottom: 9px; margin-bottom: 12px;
+  border-bottom: 2px solid var(--blue-mid);
+}
+
+/* --- PROJECT EXECUTION --- */
+.proj-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; height: calc(100% - 62px); }
+.proj-team { display: flex; flex-direction: column; gap: 10px; }
+.team-label { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 2px; }
+.team-members { display: flex; gap: 12px; }
+.tm { display: flex; align-items: center; gap: 8px; }
+.tm-badge {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--blue);
+  color: white; font-size: 21px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.tm-name { font-size: 15px; color: var(--text); line-height: 1.42; }
+.tm-name strong { display: block; font-weight: 700; }
+.tm-role { font-size: 13px; color: var(--muted); }
+.team-note { font-size: 14px; color: var(--muted); line-height: 1.52; font-style: italic; }
+
+.proj-refs-col { display: flex; flex-direction: column; gap: 8px; }
+.refs-title { font-size: 14px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 5px; }
+.refs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.ref-item { font-size: 15px; color: var(--muted); line-height: 1.50; }
+.proj-gh-wrap { border-top: 1px solid var(--blue-rule); padding-top: 7px; margin-bottom: 10px; }
+.proj-gh-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 3px; }
+.proj-gh { font-size: 16px; font-weight: 700; color: var(--blue); text-decoration: none; }
+
+/* --- FOOTER --- */
+.footer {
+  background: var(--blue);
+  padding: 11px 36px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ft-left { font-size: 14px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.70); }
+.ft-center { font-size: 15px; font-weight: 700; color: white; }
+.ft-right { font-size: 14px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.70); text-align: right; }
+</style>
+</head>
+<body style="background: rgb(74, 74, 74);">
+<div class="stage">
+<div class="poster-wrap" id="wrap" style="width: 1865px; height: 2637.11px;">
+<div class="poster" id="poster" style="transform: scale(0.9325); transform-origin: left top; background: rgb(255, 255, 255);">
+
+<!-- == HEADER == -->
+<div class="header" style="background: rgb(30, 111, 217);">
+  <div class="hd-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 88px;">Multi-Task NLP Evaluation</div>
+  <div class="hd-sub" style="color: rgba(255, 255, 255, 0.85); font-weight: 300; font-style: italic; font-size: 22px;">Three NLP Tasks on a 10-Sentence Review Test Set: NERC, Sentiment, and Topic Analysis</div>
+  <div class="hd-affil" style="color: rgba(255, 255, 255, 0.6); font-weight: 300; font-style: italic; font-size: 20px;">VU Amsterdam &middot; BSc Artificial Intelligence&nbsp;&middot;&nbsp; Text Mining&nbsp;&middot; Group 4</div>
+</div>
+
+<!-- == BODY == -->
+<div class="body">
+
+  <!-- -- 1 Tasks & Data  |  2 Methods -- -->
+  <div class="top-row">
+
+    <!-- 1 TASKS & DATA -->
+    <div>
+      <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">1</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Tasks &amp; Data</div></div>
+      <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Three tasks evaluated on a gold standard test set: NERC (BIO token tags, 4 entity types), Sentiment (positive / neutral / negative per sentence), and Topic (movie / restaurant / book per sentence). Systems are scored on accuracy and macro-averaged F1 to balance weights across rare classes uniformly.</p>
+      <div class="info-box" style="background: rgb(232, 242, 255);">
+        <div class="ib-title" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Test Set</div>
+        <div class="ib-row" style="color: rgb(35, 35, 35); font-size: 17px;"><strong style="color: rgb(35, 35, 35);">NER-test.tsv</strong> - 214 tokens, 10 sentences, tracking PER / ORG / LOC / MISC classes.</div>
+        <div class="ib-row" style="color: rgb(35, 35, 35); font-size: 17px;"><strong style="color: rgb(35, 35, 35);">Sentiment-topic-test.tsv</strong> - same 10 sentences with parallel evaluation layers.</div>
+        <div class="ib-row" style="color: rgb(35, 35, 35); font-size: 17px;">Given the compact test landscape (n = 10), structured qualitative profiling and per-class matrix validation guide our primary insights.</div>
+        <div class="ib-stats">
+          <span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">pos 4</span><span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">neu 3</span><span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">neg 3</span>
+          <span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">movie 5</span><span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">restaurant 3</span><span class="ib-stat" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">book 2</span>
+        </div>
+      </div>
+      <div class="info-box" style="background: rgb(232, 242, 255);">
+        <div class="ib-title" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Training Data &nbsp;&middot;&nbsp; topic only</div>
+        <div class="ib-row" style="color: rgb(35, 35, 35); font-size: 17px;">4,500 balanced sentences (1,500 per class): NLTK movie_reviews (movie), Gutenberg corpus (book), and Brown reviews + hobbies (restaurant).</div>
+        <div class="ib-row" style="color: rgb(35, 35, 35); font-size: 17px;">Validated with 5-fold cross-validation. NERC and sentiment use static pre-trained / lexicon modules (no training data collected).</div>
+      </div>
+    </div>
+
+    <!-- 2 METHODS -->
+    <div>
+      <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">2</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Methods</div></div>
+      <div class="bubble-card" style="background: rgb(232, 242, 255);">
+        <div class="bubble-box" style="background: rgb(255, 255, 255);">
+          <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">TEXT PREPROCESSING<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">PIPELINE</span></div>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">[ Placeholder - describe your preprocessing steps here: tokenization, lowercasing, stopword removal, punctuation handling, stemming/lemmatization, or any domain-specific cleaning applied before feature extraction. ]</p>
+        </div>
+        <div class="bubble-box" style="background: rgb(255, 255, 255);">
+          <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">NAMED ENTITY RECOGNITION<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">2 SYSTEMS</span></div>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A - spaCy en_core_web_sm pipeline using a Convolutional Neural Network (CNN) trained on OntoNotes 5. System B - NLTK Maximum Entropy (MaxEnt) token chunker trained on ACE 2004. Output labels are mapped to standard CoNLL BIO tags.</p>
+        </div>
+        <div class="bubble-box" style="background: rgb(255, 255, 255);">
+          <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">SENTIMENT ANALYSIS<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">2 SYSTEMS</span></div>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">System A - VADER: rule-based lexicon of roughly 7,500 terms with negation, booster, and punctuation heuristics. System B - TextBlob / Pattern lexicon using mean token polarity, thresholded at +/-0.05 to match VADER for a fair comparison.</p>
+        </div>
+        <div class="bubble-box" style="background: rgb(255, 255, 255);">
+          <div class="bubble-box-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 16px;">SUPERVISED TOPIC CLASSIFICATION<span class="bb-tag" style="background: rgb(61, 136, 240); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">SVM</span></div>
+          <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Linear Support Vector Machine (SVM) over a TF-IDF vector space (unigram + bigram, sublinear term frequency, balanced class weights). Trained on the 4,500-sentence corpus and applied to the 10 test sentences.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /top-row -->
+
+  <!-- -- 3 RESULTS & FIGURES (full width) -- -->
+  <div class="results-row">
+    <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">3</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Results &amp; Figures</div></div>
+
+    <div class="figs-2x2">
+      <!-- Top-left: Fig 1 -->
+      <div class="fig-cell">
+        <div class="fig-label" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Figure 1 &middot; Per-tag F1 bar chart</div>
+        <img class="fig-img" src="https://raw.githubusercontent.com/nvilacla04/G4-Text-Mining-Final/main/ner_f1_comparison.png" alt="Per-tag F1 comparison spaCy vs NLTK" style="background: rgb(255, 255, 255);">
+        <p class="fig-cap" style="color: rgb(92, 92, 92); font-style: italic; font-size: 12px;">Fig 1. NERC token F1 by entity type. spaCy leads across all tags; NLTK scores 0.00 on MISC because ACE 2004 has no MISC label.</p>
+      </div>
+      <!-- Top-right: Fig 2 -->
+      <div class="fig-cell">
+        <div class="fig-label" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Figure 2 &middot; Sentiment confusion matrices</div>
+        <img class="fig-img" src="https://raw.githubusercontent.com/nvilacla04/G4-Text-Mining-Final/main/sentiment_confusion_comparison.png" alt="Sentiment confusion matrices VADER vs TextBlob" style="background: rgb(255, 255, 255);">
+        <p class="fig-cap" style="color: rgb(92, 92, 92); font-style: italic; font-size: 12px;">Fig 2. Sentiment confusion matrices for VADER and TextBlob. Both over-predict positive and miss context-dependent cases.</p>
+      </div>
+      <!-- Bottom-left: Fig 3 -->
+      <div class="fig-cell">
+        <div class="fig-label" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Figure 3 &middot; VADER compound vs TextBlob polarity scatter</div>
+        <img class="fig-img" src="https://raw.githubusercontent.com/nvilacla04/G4-Text-Mining-Final/main/sentiment_compound_vs_polarity.png" alt="VADER compound vs TextBlob polarity scatter plot" style="background: rgb(255, 255, 255);">
+        <p class="fig-cap" style="color: rgb(92, 92, 92); font-style: italic; font-size: 12px;">Fig 3. VADER compound vs TextBlob polarity, coloured by which system is correct. The two agree on 7 of 10 sentences.</p>
+      </div>
+      <!-- Bottom-right: Table 1 + CV -->
+      <div class="fig-cell">
+        <div class="fig-label" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">Table 1 &middot; Results across all tasks (n = 10)</div>
+        <div class="table-cell-inner">
+          <table class="rtable">
+            <thead>
+              <tr style="background: rgb(30, 111, 217);">
+                <th style="color: rgb(255, 255, 255); font-weight: 700; font-size: 14px;">Task</th>
+                <th style="color: rgb(255, 255, 255); font-weight: 700; font-size: 14px;">System</th>
+                <th class="r" style="color: rgb(255, 255, 255); font-weight: 700; font-size: 14px;">Acc.</th>
+                <th class="r" style="color: rgb(255, 255, 255); font-weight: 700; font-size: 14px;">Macro F1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="color: rgb(35, 35, 35);">NERC A</td><td style="color: rgb(35, 35, 35);">spaCy (OntoNotes 5)</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">97%</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">0.85</td></tr>
+              <tr style="background: rgb(242, 247, 253);"><td style="color: rgb(35, 35, 35);">NERC B</td><td style="color: rgb(35, 35, 35);">NLTK MaxEnt (ACE 2004)</td><td class="r" style="color: rgb(35, 35, 35); font-weight: 700;">94%</td><td class="r" style="color: rgb(35, 35, 35); font-weight: 700;">0.49</td></tr>
+              <tr><td style="color: rgb(35, 35, 35);">Sent. A</td><td style="color: rgb(35, 35, 35);">VADER lexicon</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">60%</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">0.56</td></tr>
+              <tr style="background: rgb(242, 247, 253);"><td style="color: rgb(35, 35, 35);">Sent. B</td><td style="color: rgb(35, 35, 35);">TextBlob / Pattern</td><td class="r" style="color: rgb(35, 35, 35); font-weight: 700;">50%</td><td class="r" style="color: rgb(35, 35, 35); font-weight: 700;">0.36</td></tr>
+              <tr><td style="color: rgb(35, 35, 35);">Topic</td><td style="color: rgb(35, 35, 35);">SVM + TF-IDF</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">90%</td><td class="r hi" style="color: rgb(26, 106, 26); font-weight: 800;">0.86</td></tr>
+            </tbody>
+          </table>
+          <div class="cv-box" style="flex: 0 0 200px; align-self: stretch; background: rgb(30, 111, 217);">
+            <div class="cv-num" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 58px;">75.6%</div>
+            <div class="cv-desc" style="color: rgba(255, 255, 255, 0.85); font-size: 15px;">Topic SVM 5-fold cross-validation accuracy on its training corpus (+/-1.5%). A more reliable generalisation estimate than the 10-sentence test score.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /results-row -->
+
+  <!-- -- 4 QUALITATIVE ERROR ANALYSIS -- -->
+  <div class="qual-row">
+    <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">4</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Qualitative Error Analysis</div></div>
+    <div class="qual-grid">
+      <div class="qual-cell">
+        <div class="qual-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">NER Mismatches</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">The performance gap comes mainly from label-set differences, not weaker sequence modelling. NLTK's ACE 2004 training has no MISC label, so it routes every nationality to LOC. It also drops honorific titles (Dame, Mr.) and misses out-of-vocabulary names such as the Dutch entity <em style="color: rgb(35, 35, 35);">Blauwbrug</em>. spaCy handles MISC and titles better but makes a few boundary errors.</p>
+      </div>
+      <div class="qual-cell">
+        <div class="qual-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">Sentiment Vulnerabilities</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Both lexicon systems struggle with context that has no overt sentiment adjective. A single strong word can dominate (e.g. "loved" overriding the rejection in S9). VADER catches strong negatives like "disaster" but is fooled by isolated positives; TextBlob's averaging avoids one VADER false positive (S5) but its narrow adjective lexicon adds two new misses (S0, S8).</p>
+      </div>
+      <div class="qual-cell">
+        <div class="qual-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">Topic Corpus Bias</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">The single error (a book sentence read as movie) is a corpus-composition effect. Because Gutenberg supplies prose FROM books rather than reviews ABOUT books, cues like "novels" never learned a strong book weight. Movie and restaurant sentences are all classified correctly.</p>
+      </div>
+    </div>
+  </div><!-- /qual-row -->
+
+  <!-- -- 5 DISCUSSION, CONCLUSIONS -- -->
+  <div class="disc-row">
+    <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">5</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Discussion &amp; Conclusions</div></div>
+    <div class="disc-grid">
+      <div class="disc-cell" style="background: rgb(232, 242, 255);">
+        <div class="disc-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">Domain Match</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Domain match between training and test data is the decisive factor across all tasks. Well-matched pre-training (spaCy) or in-domain vocabulary (SVM) gives high scores, while distribution mismatch causes the errors above.</p>
+      </div>
+      <div class="disc-cell" style="background: rgb(232, 242, 255);">
+        <div class="disc-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">NERC &amp; Sentiment</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">Lexicon models handle explicit opinion reliably but lack the context to read idiom or implied sentiment. With more time, a fine-tuned transformer would address these limitations and the shared positive bias.</p>
+      </div>
+      <div class="disc-cell" style="background: rgb(232, 242, 255);">
+        <div class="disc-cell-title" style="color: rgb(30, 111, 217); font-weight: 900; font-size: 17px;">Topic &amp; Future Work</div>
+        <p class="body-p" style="color: rgb(35, 35, 35); font-size: 18px;">The SVM baseline is reliable. Future work: use a real book-review corpus (Goodreads / Amazon) for the book class and add idiomatic multi-word entries to the sentiment lexicons.</p>
+      </div>
+    </div>
+  </div><!-- /disc-row -->
+
+  <!-- -- 6 PROJECT EXECUTION & REFERENCES -- -->
+  <div class="proj-row">
+    <div class="sec-hd" style="background: rgb(30, 111, 217);"><div class="sec-num" style="background: rgb(255, 255, 255); color: rgb(30, 111, 217); font-weight: 900; font-size: 24px;">6</div><div class="sec-title" style="color: rgb(255, 255, 255); font-weight: 900; font-size: 29px;">Division of Work &amp; References</div></div>
+    <div class="proj-inner">
+      <div class="proj-team">
+        <div class="team-label" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 12px;">Team - Group 4</div>
+        <div class="team-members">
+          <div class="tm"><div class="tm-badge" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 900; font-size: 21px;">A</div><div class="tm-name" style="color: rgb(35, 35, 35); font-size: 15px;"><strong style="color: rgb(35, 35, 35); font-weight: 700;">Abir</strong><span class="tm-role" style="color: rgb(92, 92, 92); font-size: 13px;">Code &middot; Analysis &middot; Poster</span></div></div>
+          <div class="tm"><div class="tm-badge" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 900; font-size: 21px;">T</div><div class="tm-name" style="color: rgb(35, 35, 35); font-size: 15px;"><strong style="color: rgb(35, 35, 35); font-weight: 700;">Tommaso</strong><span class="tm-role" style="color: rgb(92, 92, 92); font-size: 13px;">Code &middot; Analysis &middot; Poster</span></div></div>
+          <div class="tm"><div class="tm-badge" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 900; font-size: 21px;">D</div><div class="tm-name" style="color: rgb(35, 35, 35); font-size: 15px;"><strong style="color: rgb(35, 35, 35); font-weight: 700;">Demy</strong><span class="tm-role" style="color: rgb(92, 92, 92); font-size: 13px;">Code &middot; Analysis &middot; Poster</span></div></div>
+          <div class="tm"><div class="tm-badge" style="background: rgb(30, 111, 217); color: rgb(255, 255, 255); font-weight: 900; font-size: 21px;">N</div><div class="tm-name" style="color: rgb(35, 35, 35); font-size: 15px;"><strong style="color: rgb(35, 35, 35); font-weight: 700;">Nicolau</strong><span class="tm-role" style="color: rgb(92, 92, 92); font-size: 13px;">Code &middot; Analysis &middot; Poster</span></div></div>
+        </div>
+        <div class="team-note" style="color: rgb(92, 92, 92); font-style: italic; font-size: 14px;">All team members contributed to the coding, the result and error analysis, and the preparation of this poster.</div>
+      </div>
+      <div class="proj-refs-col">
+        <div class="proj-gh-wrap">
+          <div class="proj-gh-label" style="color: rgb(92, 92, 92); font-size: 13px;">Source Code Repository</div>
+          <a class="proj-gh" href="https://github.com/nvilacla04/G4-Text-Mining-Final" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 16px;">github.com/nvilacla04/G4-Text-Mining-Final</a>
+        </div>
+        <div class="refs-title" style="color: rgb(30, 111, 217); font-weight: 700; font-size: 14px;">References</div>
+        <div class="refs-grid">
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[1] Hutto &amp; Gilbert (2014). VADER: Sentiment analysis. ICWSM.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[2] Honnibal &amp; Montani (2017). spaCy 2: NLP with CNNs.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[3] Bird, Klein &amp; Loper (2009). NLP with Python. O'Reilly.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[4] De Smedt &amp; Daelemans (2012). Pattern. JMLR.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[5] Tjong Kim Sang &amp; De Meulder (2003). CoNLL Shared Task. CoNLL.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[6] Weischedel et al. (2013). OntoNotes 5.0. LDC.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[7] Doddington et al. (2004). The ACE program. LREC.</div>
+          <div class="ref-item" style="color: rgb(92, 92, 92); font-size: 15px;">[8] Joachims (1998). Categorization with SVMs. ECML.</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /proj-row -->
+
+</div><!-- /body -->
+
+<!-- -- FOOTER -- -->
+<div class="footer" style="background: rgb(30, 111, 217);">
+  <div class="ft-left" style="color: rgba(255, 255, 255, 0.7); font-weight: 300; font-style: italic; font-size: 14px;">Group 4</div>
+  <div class="ft-center" style="color: rgb(255, 255, 255); font-weight: 700; font-size: 15px;">Multi-Task NLP Evaluation</div>
+  <div class="ft-right" style="color: rgba(255, 255, 255, 0.7); font-weight: 300; font-style: italic; font-size: 14px;">NERC &middot; Sentiment &middot; Topic</div>
+</div>
+
+</div><!-- /poster -->
+</div><!-- /poster-wrap -->
+</div><!-- /stage -->
+
+<script>
+function scalePoster() {
+  var W = 2000, H = 2828;
+  var s = (window.innerWidth - 40) / W;
+  var poster = document.getElementById('poster');
+  var wrap   = document.getElementById('wrap');
+  poster.style.transform       = 'scale(' + s + ')';
+  poster.style.transformOrigin = 'top left';
+  wrap.style.width  = (W * s) + 'px';
+  wrap.style.height = (H * s) + 'px';
+}
+window.addEventListener('resize', scalePoster);
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(scalePoster); }
+scalePoster();
+</script>
+
+</body></html>
